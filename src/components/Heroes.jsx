@@ -1,14 +1,12 @@
 import { Fragment, useEffect, useState } from "react"
 
-const axios = require('axios')
-
-const Heroes = (heroe) => {
+const Heroes = (props) => {
 
     //States
     const [data, setData] = useState([])
 
     useEffect(() => {
-        getData(heroe)
+        getData(props)
     }, [])
 
     const getData = async (heroe) => {
@@ -17,20 +15,19 @@ const Heroes = (heroe) => {
         const apikey = '985df732fdee7ed63f7d5eb1a2143982'
         const url = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${text_search}&apikey=${apikey}&hash=${hash}&ts=1`
     
-        await axios(url)
-            .then((response) => {
-                switch (response.status) {
-                    case 200:
-                        setData(response.data.data.results)
-                        break
-                    default:
-                        break;
-                }
-            })
-            .then((data) => {
-                console.log(data)
-                return data
-            })
+        const response = await fetch(url)
+        switch (response.status) {
+            case 200:
+                const resData = await response.json()
+                console.log(resData)
+                setData(resData.data.results)
+                break;
+        
+            default:
+                console.log("Error inesperado: "+response.status)
+                break;
+        }
+            
     
     }
 
