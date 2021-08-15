@@ -40,7 +40,6 @@ const Heroes = (props) => {
                                 <img src={item.thumbnail.path+"/portrait_incredible."+item.thumbnail.extension} alt={item.name}/>
                                 <div className="info">
                                     <h3 className="title">{item.name}</h3>
-                                    <p className="description">{item.description}</p>
                                 </div>
                             </div>
                         ))
